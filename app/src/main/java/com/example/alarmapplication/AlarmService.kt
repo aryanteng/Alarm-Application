@@ -3,12 +3,15 @@ package com.example.alarmapplication
 import android.app.Service
 import android.content.Intent
 import android.media.MediaPlayer
+import android.os.CountDownTimer
 import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import java.util.Calendar
 import java.util.Date
+import java.util.Timer
+import java.util.TimerTask
 
 private var TAG = "AlarmService"
 
@@ -25,6 +28,11 @@ class AlarmService : Service() {
         val minutes = intent?.getIntExtra("minutes", 0)
         Log.i(TAG, hours.toString())
         player.start()
+        Timer().schedule(object : TimerTask(){
+            override fun run() {
+                stopSelf()
+            }
+        }, 10000)
         return START_STICKY
     }
 
@@ -44,4 +52,5 @@ class AlarmService : Service() {
         Log.i(TAG, message)
     }
 }
+
 
