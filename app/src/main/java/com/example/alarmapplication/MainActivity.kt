@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var batteryLowReceiver: BatteryLowReceiver
     private lateinit var batteryOkayReceiver: BatteryOkayReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         batteryLowReceiver = BatteryLowReceiver()
+        batteryOkayReceiver = BatteryOkayReceiver()
 
         IntentFilter(Intent.ACTION_BATTERY_LOW).also {
             registerReceiver(batteryLowReceiver, it)
