@@ -33,7 +33,7 @@ class AlarmService : Service() {
                 if(minutes == currMinute && hours == currHour){
 //                    logCallback("Alarm Ringing!")
                     player.start()
-                    Timer().schedule(object : TimerTask(){
+                    timer.schedule(object : TimerTask(){
                         override fun run() {
                             stopSelf()
                         }
