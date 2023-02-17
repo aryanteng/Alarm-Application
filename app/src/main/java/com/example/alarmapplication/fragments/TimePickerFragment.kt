@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TimePicker
 import com.example.alarmapplication.R
 import com.example.alarmapplication.databinding.FragmentTimePickerBinding
 
@@ -22,6 +23,7 @@ class TimePickerFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var timePickerBinding: FragmentTimePickerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,16 @@ class TimePickerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_time_picker, container, false)
+        timePickerBinding = FragmentTimePickerBinding.inflate(inflater, container, false)
+        return timePickerBinding.root
+    }
+
+    public fun getHour(): Int {
+        return timePickerBinding.timePicker.hour
+    }
+
+    public fun getMinute(): Int {
+        return timePickerBinding.timePicker.minute
     }
 
     companion object {

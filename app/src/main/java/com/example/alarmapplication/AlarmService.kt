@@ -4,7 +4,10 @@ import android.app.Service
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.CountDownTimer
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.os.Message
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
@@ -12,35 +15,47 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Timer
 import java.util.TimerTask
+import kotlin.math.min
 
 private var TAG = "AlarmService"
 
 class AlarmService : Service() {
     private lateinit var player: MediaPlayer
+    private lateinit var timer: Timer
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         player = MediaPlayer.create(this, Settings.System.DEFAULT_ALARM_ALERT_URI)
         logCallback("Service Started")
-        val currentTime: Date = Calendar.getInstance().time
-        val currentHour: Int = Calendar.getInstance().time.hours
-        val currentMinutes: Int = Calendar.getInstance().time.minutes
         val hours = intent?.getIntExtra("hours", 0)
         val minutes = intent?.getIntExtra("minutes", 0)
         Log.i(TAG, hours.toString())
-        player.start()
-        Timer().schedule(object : TimerTask(){
+        Log.i(TAG, minutes.toString())
+        timer = Timer()
+        timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                stopSelf()
+                val calendar = Calendar.getInstance()
+                val currHour = calendar.get(Calendar.HOUR_OF_DAY)
+                val currMinute = calendar.get(Calendar.MINUTE)
+                if(minutes == currMinute && hours == currHour){
+//                    logCallback("Alarm Ringing!")
+                    player.start()
+                    Timer().schedule(object : TimerTask(){
+                        override fun run() {
+                            stopSelf()
+                        }
+                    }, 10000)
+                }
             }
-        }, 10000)
+        }, 0, 10000)
+
         return START_STICKY
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
         logCallback("Service Stopped")
         player.stop()
+        timer.cancel()
     }
 
     override fun onBind(intent: Intent): IBinder {
