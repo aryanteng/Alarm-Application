@@ -3,19 +3,13 @@ package com.example.alarmapplication
 import android.app.Service
 import android.content.Intent
 import android.media.MediaPlayer
-import android.os.CountDownTimer
-import android.os.Handler
 import android.os.IBinder
-import android.os.Looper
-import android.os.Message
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import java.util.Calendar
-import java.util.Date
 import java.util.Timer
 import java.util.TimerTask
-import kotlin.math.min
 
 private var TAG = "AlarmService"
 

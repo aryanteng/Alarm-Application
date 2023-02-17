@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TimePicker
-import com.example.alarmapplication.R
 import com.example.alarmapplication.databinding.FragmentTimePickerBinding
 
 // TODO: Rename parameter arguments, choose names that match
