@@ -32,6 +32,8 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:text="Stop Service"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/theme"
             android:id="@+id/btn_stop" />
 
     </LinearLayout>
