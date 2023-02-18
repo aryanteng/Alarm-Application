@@ -52,10 +52,11 @@ class AlarmService : Service() {
     }
 
     private fun showToastAndLog(){
+        val mess = "Alarm Ringing!"
         Handler(Looper.getMainLooper()).post {
-            Toast.makeText(this, "Alarm Ringing!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, mess, Toast.LENGTH_SHORT).show()
         }
-        Log.i(TAG, "Alarm Ringing!")
+        Log.i(TAG, mess)
     }
 
     private fun startSound(){
