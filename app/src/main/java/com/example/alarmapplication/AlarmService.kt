@@ -65,8 +65,10 @@ class AlarmService : Service() {
     }
 
     private fun stopSound(){
-        player.stop()
-        player.release()
+        if(player.isPlaying){
+            player.stop()
+            player.reset()
+        }
     }
 
     override fun onDestroy() {

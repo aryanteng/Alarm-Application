@@ -42,21 +42,15 @@ class TimePickerFragment : Fragment() {
     ): View {
         timePickerBinding = FragmentTimePickerBinding.inflate(inflater, container, false)
         timePickerBinding.btnStart.setOnClickListener {
+            Log.i("ALARM LIST 1", list.toString())
             val intent = Intent(activity, AlarmService::class.java)
             hash.clear()
             hash["hours"] =  timePickerBinding.timePicker.hour
             hash["minutes"] = timePickerBinding.timePicker.minute
-            list.add(hash)
-            Log.i("ALARM LIST", list.toString())
+            Log.i("ALARM LIST 2", list.toString())
             intent.putExtra("hash", hash)
             activity?.startService(intent)
-            var string = "Your Alarms:\n"
-            list.forEach {
-                val hours = it["hours"].toString()
-                val minutes = it["minutes"].toString()
-                string += "Time $hours:$minutes\n"
-            }
-            timePickerBinding.tvAlarmList.text = string
+            showAlarmsUI(hash)
         }
 
         timePickerBinding.btnStop.setOnClickListener {
@@ -66,6 +60,19 @@ class TimePickerFragment : Fragment() {
         }
 
         return timePickerBinding.root
+    }
+
+    private fun showAlarmsUI(hash: HashMap<String, Int>){
+        if(!list.contains(hash)){
+            list.add(hash)
+        }
+        var string = "Your Alarms:\n"
+        list.forEach {
+            val hours = it["hours"].toString()
+            val minutes = it["minutes"].toString()
+            string += "Time $hours:$minutes\n"
+        }
+        timePickerBinding.tvAlarmList.text = string
     }
 
 //    public fun getHour(): Int {

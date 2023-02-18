@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_time_picker" />
 
-
 <!--    <TextView-->
 <!--        android:id="@+id/tv_alarmList"-->
 <!--        android:layout_width="match_parent"-->
@@ -46,7 +45,5 @@
 <!--            android:id="@+id/btn_stop" />-->
 
 <!--    </LinearLayout>-->
-
-
 
 </LinearLayout>

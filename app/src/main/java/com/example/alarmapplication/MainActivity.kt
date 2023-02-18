@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var batteryLowReceiver: BatteryLowReceiver
     private lateinit var batteryOkayReceiver: BatteryOkayReceiver
     private lateinit var timePickerFragment: TimePickerFragment
-    private var hash: HashMap<String, Int> = hashMapOf()
-    private var list: MutableList<HashMap<String, Int>> = mutableListOf()
+//    private var hash: HashMap<String, Int> = hashMapOf()
+//    private var list: MutableList<HashMap<String, Int>> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
