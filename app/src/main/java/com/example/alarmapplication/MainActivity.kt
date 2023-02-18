@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var batteryLowReceiver: BatteryLowReceiver
     private lateinit var batteryOkayReceiver: BatteryOkayReceiver
     private lateinit var timePickerFragment: TimePickerFragment
+    private var hash: HashMap<String, Int> = hashMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnStart.setOnClickListener {
             val intent = Intent(this, AlarmService::class.java)
+            hash["hours"] =  timePickerFragment.getHour()
+            hash["minutes"] = timePickerFragment.getMinute()
+            intent.putExtra("hash", hash)
             intent.putExtra("hours", timePickerFragment.getHour())
             intent.putExtra("minutes", timePickerFragment.getMinute())
             startService(intent)

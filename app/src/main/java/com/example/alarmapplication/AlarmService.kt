@@ -14,30 +14,38 @@ import java.util.TimerTask
 private var TAG = "AlarmService"
 
 class AlarmService : Service() {
-    private lateinit var player: MediaPlayer
+    private var player: MediaPlayer = MediaPlayer()
     private lateinit var timer: Timer
+    private var list: MutableList<HashMap<String, Int>> = mutableListOf()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        player = MediaPlayer.create(this, Settings.System.DEFAULT_ALARM_ALERT_URI)
         logCallback("Service Started")
-        val hours = intent?.getIntExtra("hours", 0)
-        val minutes = intent?.getIntExtra("minutes", 0)
+        val hash = intent?.getSerializableExtra("hash") as HashMap<String, Int>
+        val hours = intent.getIntExtra("hours", 0)
+        val minutes = intent.getIntExtra("minutes", 0)
         Log.i(TAG, hours.toString())
         Log.i(TAG, minutes.toString())
+        list.add(hash)
         timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
+                Log.i("list", list.toString())
                 val calendar = Calendar.getInstance()
                 val currHour = calendar.get(Calendar.HOUR_OF_DAY)
                 val currMinute = calendar.get(Calendar.MINUTE)
-                if(minutes == currMinute && hours == currHour){
+                list.forEach {
+                    if(it["minutes"] == currMinute && it["hours"] == currHour){
 //                    logCallback("Alarm Ringing!")
-                    player.start()
-                    timer.schedule(object : TimerTask(){
-                        override fun run() {
-                            stopSelf()
-                        }
-                    }, 10000)
+                        startSound()
+                        Log.i("list", list.toString())
+                        list.remove(it)
+                        timer.schedule(object : TimerTask(){
+                            override fun run() {
+                                stopSound()
+                            }
+                        }, 10000)
+                        return
+                    }
                 }
             }
         }, 0, 10000)
@@ -45,10 +53,20 @@ class AlarmService : Service() {
         return START_STICKY
     }
 
+    private fun startSound(){
+        player = MediaPlayer.create(this@AlarmService, Settings.System.DEFAULT_ALARM_ALERT_URI)
+        player.start()
+    }
+
+    private fun stopSound(){
+        player.stop()
+        player.release()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         logCallback("Service Stopped")
-        player.stop()
+        stopSound()
         timer.cancel()
     }
 
@@ -61,5 +79,3 @@ class AlarmService : Service() {
         Log.i(TAG, message)
     }
 }
-
-
