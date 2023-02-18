@@ -1,10 +1,13 @@
 package com.example.alarmapplication.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.alarmapplication.AlarmService
 import com.example.alarmapplication.databinding.FragmentTimePickerBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +25,8 @@ class TimePickerFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var timePickerBinding: FragmentTimePickerBinding
+    private var hash: HashMap<String, Int> = hashMapOf()
+    private var list: MutableList<HashMap<String, Int>> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,19 +39,42 @@ class TimePickerFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         timePickerBinding = FragmentTimePickerBinding.inflate(inflater, container, false)
+        timePickerBinding.btnStart.setOnClickListener {
+            val intent = Intent(activity, AlarmService::class.java)
+            hash.clear()
+            hash["hours"] =  timePickerBinding.timePicker.hour
+            hash["minutes"] = timePickerBinding.timePicker.minute
+            list.add(hash)
+            Log.i("ALARM LIST", list.toString())
+            intent.putExtra("hash", hash)
+            activity?.startService(intent)
+            var string = "Your Alarms:\n"
+            list.forEach {
+                val hours = it["hours"].toString()
+                val minutes = it["minutes"].toString()
+                string += "Time $hours:$minutes\n"
+            }
+            timePickerBinding.tvAlarmList.text = string
+        }
+
+        timePickerBinding.btnStop.setOnClickListener {
+            activity?.stopService(Intent(activity, AlarmService::class.java))
+            list.clear()
+            timePickerBinding.tvAlarmList.text = null
+        }
+
         return timePickerBinding.root
     }
 
-    public fun getHour(): Int {
-        return timePickerBinding.timePicker.hour
-    }
-
-    public fun getMinute(): Int {
-        return timePickerBinding.timePicker.minute
-    }
+//    public fun getHour(): Int {
+//        return timePickerBinding.timePicker.hour
+//    }
+//
+//    public fun getMinute(): Int {
+//        return timePickerBinding.timePicker.minute
+//    }
 
     companion object {
         /**

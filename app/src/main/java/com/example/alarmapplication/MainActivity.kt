@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.alarmapplication.databinding.ActivityMainBinding
 import com.example.alarmapplication.fragments.TimePickerFragment
 
@@ -34,18 +35,29 @@ class MainActivity : AppCompatActivity() {
             registerReceiver(batteryOkayReceiver, it)
         }
 
-        binding.btnStart.setOnClickListener {
-            val intent = Intent(this, AlarmService::class.java)
-            hash["hours"] =  timePickerFragment.getHour()
-            hash["minutes"] = timePickerFragment.getMinute()
-            list.add(hash)
-            intent.putExtra("hash", hash)
-            startService(intent)
-        }
-
-        binding.btnStop.setOnClickListener {
-            stopService(Intent(this, AlarmService::class.java))
-        }
+//        binding.btnStart.setOnClickListener {
+//            val intent = Intent(this, AlarmService::class.java)
+//            hash.clear()
+//            hash["hours"] =  timePickerFragment.getHour()
+//            hash["minutes"] = timePickerFragment.getMinute()
+//            list.add(hash)
+//            Log.i("ALARM LIST", list.toString())
+//            intent.putExtra("hash", hash)
+//            startService(intent)
+//            var string = "Your Alarms:\n"
+////            list.forEach {
+////                val hours = it["hours"].toString()
+////                val minutes = it["minutes"].toString()
+////                string += "Time $hours:$minutes\n"
+////            }
+////            binding.tvAlarmList.text = string
+//        }
+//
+//        binding.btnStop.setOnClickListener {
+//            stopService(Intent(this, AlarmService::class.java))
+//            list.clear()
+//            binding.tvAlarmList.text = null
+//        }
 
     }
 

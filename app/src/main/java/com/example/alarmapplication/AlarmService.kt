@@ -3,7 +3,9 @@ package com.example.alarmapplication
 import android.app.Service
 import android.content.Intent
 import android.media.MediaPlayer
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
@@ -31,7 +33,7 @@ class AlarmService : Service() {
                 val currMinute = calendar.get(Calendar.MINUTE)
                 list.forEach {
                     if(it["minutes"] == currMinute && it["hours"] == currHour){
-//                    logCallback("Alarm Ringing!")
+                        showToastAndLog()
                         startSound()
                         Log.i("list", list.toString())
                         list.remove(it)
@@ -47,6 +49,13 @@ class AlarmService : Service() {
         }, 0, 10000)
 
         return START_STICKY
+    }
+
+    private fun showToastAndLog(){
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(this, "Alarm Ringing!", Toast.LENGTH_SHORT).show()
+        }
+        Log.i(TAG, "Alarm Ringing!")
     }
 
     private fun startSound(){
