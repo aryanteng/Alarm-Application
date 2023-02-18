@@ -27,7 +27,7 @@ class AlarmService : Service() {
         timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                Log.i("list", list.toString())
+                Log.i(TAG, list.toString())
                 val calendar = Calendar.getInstance()
                 val currHour = calendar.get(Calendar.HOUR_OF_DAY)
                 val currMinute = calendar.get(Calendar.MINUTE)
@@ -35,7 +35,7 @@ class AlarmService : Service() {
                     if(it["minutes"] == currMinute && it["hours"] == currHour){
                         showToastAndLog()
                         startSound()
-                        Log.i("list", list.toString())
+                        Log.i(TAG, list.toString())
                         list.remove(it)
                         timer.schedule(object : TimerTask(){
                             override fun run() {

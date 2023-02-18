@@ -27,6 +27,7 @@ class TimePickerFragment : Fragment() {
     private lateinit var timePickerBinding: FragmentTimePickerBinding
     private var hash: HashMap<String, Int> = hashMapOf()
     private var list: MutableList<HashMap<String, Int>> = mutableListOf()
+    private lateinit var alarms: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,7 @@ class TimePickerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         timePickerBinding = FragmentTimePickerBinding.inflate(inflater, container, false)
+        alarms = "Your Alarms: \n"
         timePickerBinding.btnStart.setOnClickListener {
             Log.i("ALARM LIST 1", list.toString())
             val intent = Intent(activity, AlarmService::class.java)
@@ -55,7 +57,7 @@ class TimePickerFragment : Fragment() {
 
         timePickerBinding.btnStop.setOnClickListener {
             activity?.stopService(Intent(activity, AlarmService::class.java))
-            list.clear()
+            alarms = "Your Alarms:\n"
             timePickerBinding.tvAlarmList.text = null
         }
 
@@ -63,16 +65,20 @@ class TimePickerFragment : Fragment() {
     }
 
     private fun showAlarmsUI(hash: HashMap<String, Int>){
-        if(!list.contains(hash)){
-            list.add(hash)
+        var hours = hash["hours"]
+        val minutes = hash["minutes"].toString()
+        var string = ""
+        if (hours != null) {
+            if(hours > 12){
+                hours -= 12
+                string = "$hours:$minutes PM\n"
+            }
+            else{
+                string = "$hours:$minutes AM\n"
+            }
         }
-        var string = "Your Alarms:\n"
-        list.forEach {
-            val hours = it["hours"].toString()
-            val minutes = it["minutes"].toString()
-            string += "Time $hours:$minutes\n"
-        }
-        timePickerBinding.tvAlarmList.text = string
+        alarms += string
+        timePickerBinding.tvAlarmList.text = alarms
     }
 
 //    public fun getHour(): Int {
