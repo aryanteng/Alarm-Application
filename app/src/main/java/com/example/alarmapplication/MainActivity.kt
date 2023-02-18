@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity() {
             hash["hours"] =  timePickerFragment.getHour()
             hash["minutes"] = timePickerFragment.getMinute()
             intent.putExtra("hash", hash)
-            intent.putExtra("hours", timePickerFragment.getHour())
-            intent.putExtra("minutes", timePickerFragment.getMinute())
             startService(intent)
         }
 

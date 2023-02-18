@@ -21,10 +21,6 @@ class AlarmService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         logCallback("Service Started")
         val hash = intent?.getSerializableExtra("hash") as HashMap<String, Int>
-        val hours = intent.getIntExtra("hours", 0)
-        val minutes = intent.getIntExtra("minutes", 0)
-        Log.i(TAG, hours.toString())
-        Log.i(TAG, minutes.toString())
         list.add(hash)
         timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
