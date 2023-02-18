@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var batteryOkayReceiver: BatteryOkayReceiver
     private lateinit var timePickerFragment: TimePickerFragment
     private var hash: HashMap<String, Int> = hashMapOf()
+    private var list: MutableList<HashMap<String, Int>> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AlarmService::class.java)
             hash["hours"] =  timePickerFragment.getHour()
             hash["minutes"] = timePickerFragment.getMinute()
+            list.add(hash)
             intent.putExtra("hash", hash)
             startService(intent)
         }
@@ -47,8 +49,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        supportFragmentManager.findFragmentByTag("hello")
-        super.onStart()
-    }
 }
