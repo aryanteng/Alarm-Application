@@ -44,37 +44,54 @@ class TimePickerFragment : Fragment() {
         timePickerBinding = FragmentTimePickerBinding.inflate(inflater, container, false)
         alarms = "Your Alarms: \n"
         timePickerBinding.btnStart.setOnClickListener {
+            hash.clear()
             Log.i("ALARM LIST 1", list.toString())
             val intent = Intent(activity, AlarmService::class.java)
-            hash.clear()
             hash["hours"] =  timePickerBinding.timePicker.hour
             hash["minutes"] = timePickerBinding.timePicker.minute
-            Log.i("ALARM LIST 2", list.toString())
-            intent.putExtra("hash", hash)
-            activity?.startService(intent)
-            showAlarmsUI(hash)
+//            if(!list.contains(hash)){
+                list.add(hash)
+                Log.i("ALARM LIST 2", list.toString())
+                intent.putExtra("hash", hash)
+                activity?.startService(intent)
+                showAlarmsUI(hash)
+//            }
         }
 
         timePickerBinding.btnStop.setOnClickListener {
             activity?.stopService(Intent(activity, AlarmService::class.java))
             alarms = "Your Alarms:\n"
             timePickerBinding.tvAlarmList.text = null
+            hash.clear()
         }
 
         return timePickerBinding.root
     }
 
     private fun showAlarmsUI(hash: HashMap<String, Int>){
+        Log.i("ALARM LIST 3", list.toString())
         var hours = hash["hours"]
-        val minutes = hash["minutes"].toString()
+        val minutes = hash["minutes"]
         var string = ""
         if (hours != null) {
             if(hours > 12){
                 hours -= 12
-                string = "$hours:$minutes PM\n"
+                if (minutes != null) {
+                    string = if(minutes < 10){
+                        "$hours:0$minutes PM\n"
+                    } else{
+                        "$hours:$minutes PM\n"
+                    }
+                }
             }
             else{
-                string = "$hours:$minutes AM\n"
+                if (minutes != null) {
+                    string = if(minutes < 10){
+                        "$hours:0$minutes AM\n"
+                    } else{
+                        "$hours:$minutes AM\n"
+                    }
+                }
             }
         }
         alarms += string

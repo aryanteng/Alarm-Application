@@ -24,6 +24,7 @@ class AlarmService : Service() {
         logCallback("Service Started")
         val hash = intent?.getSerializableExtra("hash") as HashMap<String, Int>
         list.add(hash)
+        Log.i(TAG, list.toString())
         timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
@@ -35,7 +36,6 @@ class AlarmService : Service() {
                     if(it["minutes"] == currMinute && it["hours"] == currHour){
                         showToastAndLog()
                         startSound()
-                        Log.i(TAG, list.toString())
                         list.remove(it)
                         timer.schedule(object : TimerTask(){
                             override fun run() {
