@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.alarmapplication.AlarmService
 import com.example.alarmapplication.databinding.FragmentTimePickerBinding
 
@@ -54,6 +55,9 @@ class TimePickerFragment : Fragment() {
                 intent.putExtra("hash", hash)
                 activity?.startService(intent)
                 showAlarmsUI(hash)
+            }
+            else{
+                Toast.makeText(activity, "Alarm Already Set!", Toast.LENGTH_SHORT).show()
             }
         }
 
