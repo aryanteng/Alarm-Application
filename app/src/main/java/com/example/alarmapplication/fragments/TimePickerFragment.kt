@@ -25,7 +25,6 @@ class TimePickerFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var timePickerBinding: FragmentTimePickerBinding
-//    private var hash: HashMap<String, Int> = hashMapOf()
     private var list: MutableList<HashMap<String, Int>> = mutableListOf()
     private lateinit var alarms: String
 
@@ -97,14 +96,6 @@ class TimePickerFragment : Fragment() {
         alarms += string
         timePickerBinding.tvAlarmList.text = alarms
     }
-
-//    public fun getHour(): Int {
-//        return timePickerBinding.timePicker.hour
-//    }
-//
-//    public fun getMinute(): Int {
-//        return timePickerBinding.timePicker.minute
-//    }
 
     companion object {
         /**

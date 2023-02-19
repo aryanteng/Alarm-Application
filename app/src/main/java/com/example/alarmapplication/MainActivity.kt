@@ -13,8 +13,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var batteryLowReceiver: BatteryLowReceiver
     private lateinit var batteryOkayReceiver: BatteryOkayReceiver
     private lateinit var timePickerFragment: TimePickerFragment
-//    private var hash: HashMap<String, Int> = hashMapOf()
-//    private var list: MutableList<HashMap<String, Int>> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,30 +32,6 @@ class MainActivity : AppCompatActivity() {
         IntentFilter(Intent.ACTION_BATTERY_OKAY).also {
             registerReceiver(batteryOkayReceiver, it)
         }
-
-//        binding.btnStart.setOnClickListener {
-//            val intent = Intent(this, AlarmService::class.java)
-//            hash.clear()
-//            hash["hours"] =  timePickerFragment.getHour()
-//            hash["minutes"] = timePickerFragment.getMinute()
-//            list.add(hash)
-//            Log.i("ALARM LIST", list.toString())
-//            intent.putExtra("hash", hash)
-//            startService(intent)
-//            var string = "Your Alarms:\n"
-////            list.forEach {
-////                val hours = it["hours"].toString()
-////                val minutes = it["minutes"].toString()
-////                string += "Time $hours:$minutes\n"
-////            }
-////            binding.tvAlarmList.text = string
-//        }
-//
-//        binding.btnStop.setOnClickListener {
-//            stopService(Intent(this, AlarmService::class.java))
-//            list.clear()
-//            binding.tvAlarmList.text = null
-//        }
 
     }
 
