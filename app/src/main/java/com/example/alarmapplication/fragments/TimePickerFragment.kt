@@ -41,6 +41,7 @@ class TimePickerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         timePickerBinding = FragmentTimePickerBinding.inflate(inflater, container, false)
         alarms = "Your Alarms: \n"
         timePickerBinding.btnStart.setOnClickListener {
