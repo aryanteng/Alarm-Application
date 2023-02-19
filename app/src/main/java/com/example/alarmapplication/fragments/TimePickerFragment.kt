@@ -25,7 +25,7 @@ class TimePickerFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var timePickerBinding: FragmentTimePickerBinding
-    private var hash: HashMap<String, Int> = hashMapOf()
+//    private var hash: HashMap<String, Int> = hashMapOf()
     private var list: MutableList<HashMap<String, Int>> = mutableListOf()
     private lateinit var alarms: String
 
@@ -44,25 +44,25 @@ class TimePickerFragment : Fragment() {
         timePickerBinding = FragmentTimePickerBinding.inflate(inflater, container, false)
         alarms = "Your Alarms: \n"
         timePickerBinding.btnStart.setOnClickListener {
-            hash.clear()
+            val hash: HashMap<String, Int> = hashMapOf()
             Log.i("ALARM LIST 1", list.toString())
             val intent = Intent(activity, AlarmService::class.java)
             hash["hours"] =  timePickerBinding.timePicker.hour
             hash["minutes"] = timePickerBinding.timePicker.minute
-//            if(!list.contains(hash)){
-            list.add(hash)
-            Log.i("ALARM LIST 2", list.toString())
-            intent.putExtra("hash", hash)
-            activity?.startService(intent)
-            showAlarmsUI(hash)
-//            }
+            if(!list.contains(hash)){
+                list.add(hash)
+                Log.i("ALARM LIST 2", list.toString())
+                intent.putExtra("hash", hash)
+                activity?.startService(intent)
+                showAlarmsUI(hash)
+            }
         }
 
         timePickerBinding.btnStop.setOnClickListener {
             activity?.stopService(Intent(activity, AlarmService::class.java))
             alarms = "Your Alarms:\n"
             timePickerBinding.tvAlarmList.text = null
-            hash.clear()
+            list.clear()
         }
 
         return timePickerBinding.root
