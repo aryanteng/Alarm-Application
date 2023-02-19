@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var batteryLowReceiver: BatteryLowReceiver
     private lateinit var batteryOkayReceiver: BatteryOkayReceiver
+    private lateinit var incomingCallReceiver: IncomingCallReceiver
+    private lateinit var powerConnectedReceiver: PowerConnectedReceiver
     private lateinit var timePickerFragment: TimePickerFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         batteryLowReceiver = BatteryLowReceiver()
         batteryOkayReceiver = BatteryOkayReceiver()
+        incomingCallReceiver = IncomingCallReceiver()
+        powerConnectedReceiver = PowerConnectedReceiver()
 
         timePickerFragment = supportFragmentManager.findFragmentByTag("timePicker") as TimePickerFragment
 
@@ -31,6 +35,14 @@ class MainActivity : AppCompatActivity() {
 
         IntentFilter(Intent.ACTION_BATTERY_OKAY).also {
             registerReceiver(batteryOkayReceiver, it)
+        }
+
+        IntentFilter(Intent.ACTION_POWER_CONNECTED).also {
+            registerReceiver(powerConnectedReceiver, it)
+        }
+
+        IntentFilter(Intent.ACTION_CALL).also {
+            registerReceiver(incomingCallReceiver, it)
         }
 
     }
