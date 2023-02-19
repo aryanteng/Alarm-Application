@@ -71,7 +71,6 @@ class TimePickerFragment : Fragment() {
     }
 
     private fun showAlarmsUI(hash: HashMap<String, Int>){
-        Log.i("ALARM LIST 3", list.toString())
         var hours = hash["hours"]
         val minutes = hash["minutes"]
         var string = ""
