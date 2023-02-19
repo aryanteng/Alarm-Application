@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
         android:paddingHorizontal="20dp"
-        android:textSize="18sp"/>
+        android:lineHeight="30sp"
+        android:textSize="20sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

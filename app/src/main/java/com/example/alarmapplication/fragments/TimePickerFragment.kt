@@ -50,11 +50,11 @@ class TimePickerFragment : Fragment() {
             hash["hours"] =  timePickerBinding.timePicker.hour
             hash["minutes"] = timePickerBinding.timePicker.minute
 //            if(!list.contains(hash)){
-                list.add(hash)
-                Log.i("ALARM LIST 2", list.toString())
-                intent.putExtra("hash", hash)
-                activity?.startService(intent)
-                showAlarmsUI(hash)
+            list.add(hash)
+            Log.i("ALARM LIST 2", list.toString())
+            intent.putExtra("hash", hash)
+            activity?.startService(intent)
+            showAlarmsUI(hash)
 //            }
         }
 
