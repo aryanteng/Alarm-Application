@@ -3,11 +3,11 @@ package com.example.alarmapplication.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.alarmapplication.AlarmService
 import com.example.alarmapplication.databinding.FragmentTimePickerBinding
 
@@ -44,6 +44,13 @@ class TimePickerFragment : Fragment() {
 
         timePickerBinding = FragmentTimePickerBinding.inflate(inflater, container, false)
         alarms = "Your Alarms: \n"
+
+        if (savedInstanceState != null) {
+            alarms = savedInstanceState.getString("alarms").toString()
+            timePickerBinding.tvAlarmList.text = alarms
+            Log.i("HELLO", alarms)
+        }
+
         timePickerBinding.btnStart.setOnClickListener {
             val hash: HashMap<String, Int> = hashMapOf()
             val intent = Intent(activity, AlarmService::class.java)
@@ -97,6 +104,11 @@ class TimePickerFragment : Fragment() {
         }
         alarms += string
         timePickerBinding.tvAlarmList.text = alarms
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("alarms", alarms)
     }
 
     companion object {
